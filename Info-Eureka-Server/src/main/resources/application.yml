@@ -1,0 +1,16 @@
+# 指定应用名称
+spring:
+  application:
+    name: info-eureka-server
+# 配置启动端口
+server:
+  port: 8800
+# 配置eureka服务注册中心
+eureka:
+  instance:
+    hostname: localhost # 实例名称
+  client:
+    registerWithEureka: false # 是否向注册中心注册自己，本身是服务端，不向自己注册
+    fetchRegistry: false  # 是否从Eureka获取注册信息，不需要，所以设置false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/  # Eureka服务器的地址

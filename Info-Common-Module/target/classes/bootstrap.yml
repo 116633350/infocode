@@ -1,0 +1,75 @@
+spring:
+  application:
+    name: info-common-module #
+
+    # SQL
+  datasource:
+    db1:
+      driver-class-name: com.mysql.jdbc.Driver
+      jdbc-url: jdbc:mysql://192.168.1.101:3306/info_data?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: info
+      password: mw9ZbSf+CdMqtJRQPsTUh79UmoAJAQvyXvpoKYT5zA/oMgWrxSfUUGv2LITq5etudDfVZRnNc+iWwaJjCFOMtg==
+      type: com.alibaba.druid.pool.DruidDataSource
+      publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMbu7FUW8bNl2oPzVsOJVNZgpmkBCOaBJQsNdhp+25oUrElaWFyCHbdasX+pj3dsywGqFZ17onW14iQZT2Oof6ECAwEAAQ==
+      connection-properties: config.decrypt=true;publicKey=${spring.datasource.db1.publicKey};password=${spring.datasource.db1.password}
+
+    druid:
+      #连接池的配置信息
+      # 初始化大小，最小，最大
+      initial-size: 5
+      max-active: 200
+      min-idle: 5
+      max-wait: 1234
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 5
+      validation-query: select 1 from dual
+      validation-query-timeout: 1
+      test-on-borrow: true
+      test-on-return: true
+      test-while-idle: true
+      time-between-eviction-runs-millis: 10000
+      min-evictable-idle-time-millis: 30001
+      async-close-connection-enable: true
+      filters: stat,wall,slf4j
+      filter:
+        config:
+          enabled: true
+      password-callback: com.info.cop.datasource.DbPasswordCallback
+
+  cloud:
+    config:
+      #label: dbconfig #分支名称
+      name: config  #配置文件名称，config-dev.yml 中的 config
+      profile: dev  #环境名  config-dev.yml 中的 dev
+      fail-fast: true   #读取没有成功，执行快速失败
+      enabled: false
+      #这里不要忘记添加 http:// 否则无法读取
+      #uri: http://localhost:8900/ #Spring Cloud Config 服务端（配置中心）地址
+      discovery:
+        enabled: false
+        service-id: info-config-server
+
+  # Spring Boot 2.50对 actuator 监控屏蔽了大多数的节点，只暴露了 health 节点，本段配置（*）就是为了开启所有的节点
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: "*"   # * 在yaml 文件属于关键字，所以需要加引号
+
+mybatis-plus:
+  type-aliases-package: com.info.cop.mybatis.pojo
+  mapper-locations: "classpath*:/mapper/**/*.xml"
+  configuration:
+    map-underscore-to-camel-case: true  #是否开启下划线和驼峰的映射
+    cache-enabled: false    #是否开启二级缓存
+  global-config:
+    db-config: assign_id   #id为雪花算法生成
+    update-strategy: not_null  #只更新非空字段
+
+# 配置eureka服务注册中心
+eureka:
+  instance:
+    hostname: localhost # 实例名称
+  client:
+    serviceUrl: #将服务注册到 Eureka 集群
+      defaultZone: http://${eureka.instance.hostname}:8800/eureka/  # Eureka服务器的地址

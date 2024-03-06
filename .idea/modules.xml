@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Info-Cloud-Code.iml" filepath="$PROJECT_DIR$/Info-Cloud-Code.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Info-Gateway-Server/Info-Gateway-Server.iml" filepath="$PROJECT_DIR$/Info-Gateway-Server/Info-Gateway-Server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Info-Common-Module/info-common-module.iml" filepath="$PROJECT_DIR$/Info-Common-Module/info-common-module.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Info-Config-Server/info-config-server.iml" filepath="$PROJECT_DIR$/Info-Config-Server/info-config-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Info-Eureka-Server/info-eureka-server.iml" filepath="$PROJECT_DIR$/Info-Eureka-Server/info-eureka-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Info-Login-Client/info-login-client.iml" filepath="$PROJECT_DIR$/Info-Login-Client/info-login-client.iml" />
+    </modules>
+  </component>
+</project>

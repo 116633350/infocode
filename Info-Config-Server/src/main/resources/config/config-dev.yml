@@ -1,0 +1,95 @@
+﻿spring:
+  #Logback:
+  log:
+    file:
+      path: ./logs/${spring.application.name}/${spring.profiles.active} # 日志文件路径
+      maxKeep: 5  # 最大保留的文件个数
+
+      # REDIS
+      #redis:
+      # host: localhost
+      # port: 6379
+      # database: 8
+      # password:
+      # timeout: 5000
+      #默认缓存过期时间（秒）
+    # expireSeconds: 10800
+
+  # cache:
+  #   type: redis
+  #  cacheNames:
+  #   - dealerCache
+
+  # SQL
+  datasource:
+    db1:
+      driver-class-name: com.mysql.jdbc.Driver
+      jdbc-url: jdbc:mysql://192.168.1.101:3306/info_data?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: info
+      password: mw9ZbSf+CdMqtJRQPsTUh79UmoAJAQvyXvpoKYT5zA/oMgWrxSfUUGv2LITq5etudDfVZRnNc+iWwaJjCFOMtg==
+      type: com.alibaba.druid.pool.DruidDataSource
+      publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMbu7FUW8bNl2oPzVsOJVNZgpmkBCOaBJQsNdhp+25oUrElaWFyCHbdasX+pj3dsywGqFZ17onW14iQZT2Oof6ECAwEAAQ==
+      connection-properties: config.decrypt=true;publicKey=${spring.datasource.db1.publicKey};password=${spring.datasource.db1.password}
+
+    druid:
+      #连接池的配置信息
+      # 初始化大小，最小，最大
+      initial-size: 5
+      max-active: 200
+      min-idle: 5
+      max-wait: 1234
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 5
+      validation-query: select 1 from dual
+      validation-query-timeout: 1
+      test-on-borrow: true
+      test-on-return: true
+      test-while-idle: true
+      time-between-eviction-runs-millis: 10000
+      min-evictable-idle-time-millis: 30001
+      async-close-connection-enable: true
+      filters: stat,wall,slf4j
+      filter:
+        config:
+          enabled: true
+      password-callback: com.info.cop.datasource.DbPasswordCallback
+
+  #dateformat
+  jackson:
+    #日期格式化selectProcess
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      write_dates_as_timestamps: false
+      #格式化输出
+      indent_output: true
+      #忽略无法转换的对象
+      fail_on_empty_beans: false
+    #设置空如何序列化
+    defaultPropertyInclusion: ALWAYS
+    deserialization:
+      #允许对象忽略json中不存在的属性
+      fail_on_unknown_properties: false
+    parser:
+      #允许出现特殊字符和转义符
+      allow_unquoted_control_chars: true
+      #允许出现单引号
+      allow_single_quotes: true
+#
+#  sleuth:
+#    sampler:
+#      probability: 1
+#    web:
+#      additional-skip-pattern: /druid.*|.*.ico|.*.login
+# mybatis
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.info.cop.mybatis.pojo
+  config-location: classpath:mybatis/mybatis-config.xml
+
+# 分页配置
+pagehelper:
+  # helper-dialect: oracle
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+

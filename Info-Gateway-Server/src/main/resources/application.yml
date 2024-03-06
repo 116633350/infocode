@@ -1,0 +1,32 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: info-gateway-server
+  cloud:
+    gateway:
+      routes:
+        - id: payment_route #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          uri: http://localhost:8700          #匹配后提供服务的路由地址
+          filters:   #定义的过滤器
+            - name: AddHeader  #指定了要使用的过滤器的名称
+              args: #定义了过滤器的参数
+                name: X-MyHeader  #指定了要添加的请求头的名称
+                value: Added by Gateway #指定了要添加的请求头的值
+          predicates:
+            - Path=/login/**         # 断言，路径相匹配的进行路由
+
+            #访问路径localhost:9527+path的实际访问路径为:uri+path
+
+#        - id: payment_routh2 #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+#          uri: http://localhost:8001          #匹配后提供服务的路由地址
+#          predicates:
+#            - Path=/payment/lb/**         # 断言，路径相匹配的进行路由
+
+eureka:
+  instance:
+    hostname: localhost
+  client: #服务提供者provider注册进eureka服务列表内
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8800/eureka/  # Eureka服务器的地址

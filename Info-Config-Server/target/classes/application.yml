@@ -1,0 +1,63 @@
+# 配置启动端口
+server:
+  port: 8900
+# 指定应用名称
+spring:
+  application:
+    name: info-config-server
+  profiles:
+    active: native
+  cloud:
+    #    consul:
+    #      host: localhost   #consul服务器的主机地址，默认localhost
+    #      port: 8950        #consul服务器的端口，默认8500
+    #      discovery:
+    #        register: true   #是否需要注册
+    #        instance-id: ${spring.application.name}-1   #注册的实例ID（唯一标识）
+    #        service-name: ${spring.application.name}    #服务的名称
+    #        port: ${server.port}       #当前服务请求的端口
+    #        prefer-ip-address: true    #指定开启ip地址注册
+    #        ip-address: 192.168.1.101   #当前服务所在ip  ${spring.cloud.client.ip-address}
+
+    config:
+      server:
+        #下面是本地路径
+        native:
+          search-locations: file:D:\workspaceIDEA\Info-Cloud-Code\Info-Config-Server\src\main\resources\config    #classpath:config/
+
+            #git:
+            # Git 地址，https://gitee.com/java-mohan/springcloud-config.git
+            # 码云（gitee）地址 uri: https://github.com/javmohan/springcloud-config.git  (github 站点访问较慢，因此这里我们使用 gitee)
+            #uri: https://gitee.com/java-mohan/springcloud-config.git
+            #仓库名
+          #search-paths: springcloud-config
+          #- springcloud-config
+          #force-pull: true
+          # 如果Git仓库为公开仓库，可以不填写用户名和密码，如果是私有仓库需要填写
+          # username: ********
+          # password: ********
+        #分支名
+        #label: master
+
+
+        ##### RabbitMQ 相关配置，15672 是web 管理界面的端口，5672 是 MQ 的访问端口###########
+        #rabbitmq:
+        #host: 127.0.0.1
+        #port: 5672
+        #username: guest
+        #password: guest
+
+        # Spring Boot 2.50对 actuator 监控屏蔽了大多数的节点，只暴露了 heath 节点，本段配置（*）就是为了开启所有的节点
+        #management:
+        #endpoints:
+        #web:
+        #exposure:
+        #include: 'bus-refresh'
+
+# 配置eureka服务注册中心
+eureka:
+  instance:
+    hostname: localhost # 实例名称
+  client:
+    serviceUrl: #将服务注册到 Eureka 集群
+      defaultZone: http://${eureka.instance.hostname}:8800/eureka/  # Eureka服务器的地址

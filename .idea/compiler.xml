@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Info-Gateway-Server" />
+        <module name="info-config-server" />
+        <module name="info-login-client" />
+        <module name="info-eureka-server" />
+        <module name="info-common-module" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Info-Cloud-Code" target="1.8" />
+      <module name="info-common-module" target="1.8" />
+      <module name="info-config-server" target="1.8" />
+      <module name="info-eureka-server" target="1.8" />
+      <module name="Info-Gateway-Server" target="1.8" />
+      <module name="info-login-client" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
